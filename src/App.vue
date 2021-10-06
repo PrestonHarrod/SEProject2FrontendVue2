@@ -1,18 +1,26 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+<div>
+  <img alt="Vue logo" src="./assets/logo.png" 
+    contain
+    height="300"
+    width="500">
+  <div id='app'>
+    <div id="nav">
+
+    </div>
   </div>
+    <router-view />
+    <ConfirmDialog />
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import ConfirmDialog from '@/components/ConfirmDialog.vue'
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    ConfirmDialog
+  },
 }
 </script>
 
