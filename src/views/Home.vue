@@ -19,9 +19,9 @@
             </thead>
             <tbody>
                 <tr v-for="course in courses" :key="course.id" :course="course">
-                    <td>{{course.Name}}</td>
-                    <td>{{course.Hours}}</td>
-                    <td>{{course["Course Number"]}}</td>
+                    <td>{{course.name}}</td>
+                    <td>{{course.hours}}</td>
+                    <td>{{course.courseNum}}</td>
 
                     <button name="view" v-on:click.prevent="viewCourse(course)">View Course</button>
                     <button class="delete-btn" @click="doDelete(courses, course.id)">
