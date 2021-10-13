@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Course Home</h1>
-    <button @click="$router.push('/api/courses/courseadd')">Add Course</button>
+    <button @click="getAddPage()">Add Course</button>
     <button @click="getNextPage(--index)">Prev</button>
     <button @click="getNextPage(++index)">Next</button>
 
@@ -18,13 +18,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="course in courses" :key="course.id" :course="course">
+                <tr v-for="course in courses" :key="course.courseID" :course="course">
                     <td>{{course.name}}</td>
                     <td>{{course.hours}}</td>
                     <td>{{course.courseNum}}</td>
 
                     <button name="view" v-on:click.prevent="viewCourse(course)">View Course</button>
-                    <button class="delete-btn" @click="doDelete(courses, course.id)">
+                    <button class="delete-btn" @click="doDelete(courses, course.courseID)">
             Delete
           </button>
           <confirm-dialog ref="confirmDialog"></confirm-dialog>
@@ -48,7 +48,7 @@ export default {
     },
   created() {
 
-      courseServices.getCourses(0) 
+      courseServices.getAll() 
       .then(response => {
         this.courses = response.data
       })
@@ -58,33 +58,25 @@ export default {
   },
   methods: {
    viewCourse(course) {
-          this.$router.push({ name: 'view', params: {id: course.id}})
+          this.$router.push({ name: 'view', params: {id: course.courseID}})
         .then(() => {
+          console.log(course.courseID)
         })
         .catch(error => {
          console.log(error)
         })
     },
     async doDelete(courses, id) {
-            const ok = await this.$refs.confirmDialog.show({
-                title: 'Delete Course',
-                message: 'Are you sure you want to delete this course? It cannot be undone.',
-                okButton: 'Delete Forever',
-            })
-            // If you throw an error, the method will terminate here unless you surround it wil try/catch
-            if (ok) {
-                courseServices.deleteCourse(id)
-      .then(() => {
-        this.courses.forEach((course,i) => {
-          if (course.id == id) {
-            this.courses.splice(i, 1);
-          }
-        })
+            if(confirm("Do you really want to delete?")){
 
-        })
-            } else {
-                alert('You chose not to delete this course. Doing nothing now.')
-            }
+                courseServices.delete(id)
+                .then(() => {
+                    this.courses.data.splice(id, 1);
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+   }
       },
       getNextPage(num){
       if (num < 0) //dont allow index more less than 0
@@ -94,7 +86,7 @@ export default {
       }
       console.log("Number: " + num);
       console.log("Index: " + this.index);
-      courseServices.getCourses(num * 50)
+      courseServices.getAll(num * 50)
       .then(response => {
         this.courses = response.data
         })
@@ -102,6 +94,9 @@ export default {
         console.log('There was an error:', error.response)
         })
     },
+    getAddPage() {
+      
+    }
       },
 
   }

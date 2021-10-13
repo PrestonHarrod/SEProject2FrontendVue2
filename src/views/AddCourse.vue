@@ -7,28 +7,28 @@
       <table class="center">
       <tr>
       <td style="height: 30px; width: 80px; display: inline-block">  Department: </td>    
-      <td style="height: 30px; display: inline-block" > <input v-model="course.Dept" type="text" id="courseDept"> </td>    
+      <td style="height: 30px; display: inline-block" > <input v-model="course.dept" type="text" id="courseDept"> </td>    
       </tr>
       <tr>
       <td style="height: 30px; width: 80px; display: inline-block"> Course Number: </td>
-      <td style="height: 30px;  display: inline-block"><input v-model="course['Course Number']" type="text" id="courseNumber"> </td>
+      <td style="height: 30px;  display: inline-block"><input v-model="course.courseNum" type="text" id="courseNumber"> </td>
       </tr>
       <tr>
       <td style="height: 30px; width: 80px; display: inline-block"> Level: </td>
-      <td style="height: 30px;  display: inline-block"> <input v-model="course.Level" type="text" id="courseLevel"> </td> 
+      <td style="height: 30px;  display: inline-block"> <input v-model="course.level" type="text" id="courseLevel"> </td> 
       </tr>
       <tr>
       <td style="height: 30px; width: 80px; display: inline-block"> Hours: </td>
-      <td style="height: 30px;  display: inline-block"> <input v-model="course.Hours" type="text" id="courseHours"> </td>
+      <td style="height: 30px;  display: inline-block"> <input v-model="course.hours" type="text" id="courseHours"> </td>
       </tr>
       <tr>
       <td style="height: 30px; width: 80px; display: inline-block"> Course Name: </td>
-      <td style="height: 30px; display: inline-block"> <input v-model="course.Name" type="text" id="courseName"> </td>
+      <td style="height: 30px; display: inline-block"> <input v-model="course.name" type="text" id="courseName"> </td>
       </tr>
       <tr>
       <td style="width: 80px; display: inline-block"> Description: </td>
       <br>
-      <textarea v-model="course.Description" type="text" style='height:80px; width:500px; white-space: pre-line;' id="courseDescription"></textarea> 
+      <textarea v-model="course.desc" type="text" style='height:80px; width:500px; white-space: pre-line;' id="courseDescription"></textarea> 
       </tr>
       <br> <br>
       <tr>
@@ -51,7 +51,7 @@ export default {
   methods: {
     addCourse() {
      
-        courseServices.addCourse(this.course)
+        courseServices.create(this.course)
         .then(() => {
           this.$router.push({ name: 'list' })
         })

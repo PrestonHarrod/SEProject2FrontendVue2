@@ -20,12 +20,12 @@
                 </tr>
             </thead>
             <tbody>
-                    <td>{{course.Name}}</td>
-                    <td>{{course.Hours}}</td>
-                    <td>{{course["Course Number"]}}</td>
-                    <td>{{course.Level}}</td>
-                    <td>{{course.Dept}}</td>
-                    <td>{{course.Description}}</td>
+                    <td>{{course.name}}</td>
+                    <td>{{course.hours}}</td>
+                    <td>{{course.courseNum}}</td>
+                    <td>{{course.level}}</td>
+                    <td>{{course.dept}}</td>
+                    <td>{{course.desc}}</td>
             </tbody>
         </table>
 
@@ -44,9 +44,9 @@ export default {
     }
   },
   created() {
-      courseServices.getCourse(this.id)
+      courseServices.get(this.id)
       .then(response => {
-        this.course = response.data[0],
+        this.course = response.data,
         console.log(this.course)
       })
       .catch(error => {
@@ -75,7 +75,7 @@ export default {
     },
 
     deleteCourse(id){
-    courseServices.deleteCourse(this.id, id)
+    courseServices.delete(id)
       .then(() => {
         this.courses.forEach((course,i) => {
           if (course.id == id) {
